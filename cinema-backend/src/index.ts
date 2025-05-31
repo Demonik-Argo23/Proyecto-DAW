@@ -3,6 +3,7 @@ import express, { Request, Response } from 'express';
 import dotenv from 'dotenv';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import cors from 'cors';
 import {
   addCinema,
   getDbTime,
@@ -31,6 +32,7 @@ dotenv.config();
 const JWT_SECRET = process.env.JWT_SECRET || 'supersecret';
 
 const app = express();
+app.use(cors({ origin: 'http://localhost:3000' })); // <-- habilita CORS para el origen específico
 app.use(express.json());
 
 const PORT = process.env.PORT || 4000;

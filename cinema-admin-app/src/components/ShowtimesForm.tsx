@@ -22,11 +22,12 @@ const ShowtimesForm: React.FC = () => {
         const newShowtime: Showtime = {
             movieTitle,
             cinemaId,
-            showtime,
+            startTime: showtime,
+            // agrega auditoriumId y price si tu backend los requiere
         };
 
         try {
-            await addShowtime(newShowtime);
+            await addShowtime(cinemaId, newShowtime);
             setSuccess('Showtime added successfully!');
             setMovieTitle('');
             setCinemaId('');
