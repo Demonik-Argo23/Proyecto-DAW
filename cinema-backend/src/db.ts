@@ -99,6 +99,15 @@ export async function getShowtimeByMovieTitle(movie_title: string) {
     return res.rows;
 }
 
+// Obtener un showtime por ID
+export async function getShowtimeById(showtimeId: number) {
+    const res = await pool.query(
+        `SELECT * FROM showtimes WHERE id = $1`,
+        [showtimeId]
+    );
+    return res.rows[0];
+}
+
 // Agregar un showtime
 export async function addShowtime(cinema_id: number, auditoriumId: number, movie_title: string, start_time: string, price: number) {
     const res = await pool.query(
@@ -178,4 +187,30 @@ export async function getAdminByUsername(username: string) {
         [username]
     );
     return res.rows[0];
+}
+
+// --- BOOKINGS ---
+
+// Crear una reservación (booking)
+export async function createBooking(userId: number, showtimeId: number, seats: number, totalPrice: number) {
+    const res = await pool.query(
+        `INSERT INTO bookings (user_id, showtime_id, seats, total_price)
+         VALUES ($1, $2, $3, $4) RETURNING *`,
+        [userId, showtimeId, seats, totalPrice]
+    );
+    return res.rows[0];
+}
+
+// Obtener bookings de un usuario
+export async function getBookingsByUser(userId: number) {
+    const res = await pool.query(
+        `SELECT b.*, s.movie_title, s.start_time, s.price, a.name AS auditorium_name
+         FROM bookings b
+         JOIN showtimes s ON b.showtime_id = s.id
+         JOIN auditoriums a ON s.auditorium_id = a.id
+         WHERE b.user_id = $1
+         ORDER BY b.booking_time DESC`,
+        [userId]
+    );
+    return res.rows;
 }
