@@ -1,33 +1,48 @@
 import React, { useState } from 'react';
 
 interface Props {
-    onLoginSuccess: (token: string) => void;
-    goToRegister: () => void;
-    goToAdminLogin: () => void;
+    onRegisterSuccess: () => void;
+    goToLogin: () => void;
 }
 
-const UserLogin: React.FC<Props> = ({ onLoginSuccess, goToRegister, goToAdminLogin }) => {
+const UserRegister: React.FC<Props> = ({ onRegisterSuccess, goToLogin }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [confirm, setConfirm] = useState('');
     const [error, setError] = useState('');
+    const [success, setSuccess] = useState('');
 
-    const handleLogin = async (e: React.FormEvent) => {
+    const handleRegister = async (e: React.FormEvent) => {
         e.preventDefault();
         setError('');
+        setSuccess('');
+
+        if (!email || !password || !confirm) {
+            setError('Todos los campos son obligatorios.');
+            return;
+        }
+        if (password !== confirm) {
+            setError('Las contraseñas no coinciden.');
+            return;
+        }
+
         try {
-            const res = await fetch('http://localhost:4000/users/login', {
+            const res = await fetch('http://localhost:4000/users/register', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email, password }),
             });
-            const data = await res.json();
             if (res.ok) {
-                onLoginSuccess(data.token);
+                setSuccess('¡Registro exitoso! Ahora puedes iniciar sesión.');
+                setTimeout(() => {
+                    onRegisterSuccess();
+                }, 1200);
             } else {
-                setError(data.error || 'Login failed');
+                const data = await res.json();
+                setError(data.error || 'No se pudo registrar.');
             }
         } catch {
-            setError('Network error');
+            setError('Error de red.');
         }
     };
 
@@ -45,8 +60,8 @@ const UserLogin: React.FC<Props> = ({ onLoginSuccess, goToRegister, goToAdminLog
                 alignItems: 'center'
             }}
         >
-            <h2 style={{ marginBottom: 24, color: '#2563eb', fontWeight: 700 }}>Iniciar sesión</h2>
-            <form onSubmit={handleLogin} style={{ width: '100%' }}>
+            <h2 style={{ marginBottom: 24, color: '#2563eb', fontWeight: 700 }}>Crear cuenta</h2>
+            <form onSubmit={handleRegister} style={{ width: '100%' }}>
                 <input
                     type="email"
                     placeholder="Correo electrónico"
@@ -77,6 +92,21 @@ const UserLogin: React.FC<Props> = ({ onLoginSuccess, goToRegister, goToAdminLog
                         fontSize: 16
                     }}
                 />
+                <input
+                    type="password"
+                    placeholder="Confirmar contraseña"
+                    value={confirm}
+                    onChange={e => setConfirm(e.target.value)}
+                    required
+                    style={{
+                        width: '100%',
+                        marginBottom: 12,
+                        padding: '10px 12px',
+                        border: '1px solid #ccc',
+                        borderRadius: 8,
+                        fontSize: 16
+                    }}
+                />
                 <button
                     type="submit"
                     style={{
@@ -92,12 +122,13 @@ const UserLogin: React.FC<Props> = ({ onLoginSuccess, goToRegister, goToAdminLog
                         marginBottom: 12
                     }}
                 >
-                    Iniciar sesión
+                    Registrarse
                 </button>
             </form>
             {error && <div style={{ color: 'red', marginBottom: 12, width: '100%', textAlign: 'center' }}>{error}</div>}
+            {success && <div style={{ color: 'green', marginBottom: 12, width: '100%', textAlign: 'center' }}>{success}</div>}
             <button
-                onClick={goToRegister}
+                onClick={goToLogin}
                 style={{
                     width: '100%',
                     background: '#f3f4f6',
@@ -111,24 +142,10 @@ const UserLogin: React.FC<Props> = ({ onLoginSuccess, goToRegister, goToAdminLog
                     cursor: 'pointer'
                 }}
             >
-                Crear cuenta de usuario
-            </button>
-            <button
-                onClick={goToAdminLogin}
-                style={{
-                    width: '100%',
-                    background: 'none',
-                    color: '#888',
-                    border: 'none',
-                    fontSize: 13,
-                    opacity: 0.7,
-                    cursor: 'pointer'
-                }}
-            >
-                Acceso administrador
+                Volver a iniciar sesión
             </button>
         </div>
     );
 };
 
-export default UserLogin;
+export default UserRegister;

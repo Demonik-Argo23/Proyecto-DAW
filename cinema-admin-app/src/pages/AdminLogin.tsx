@@ -2,12 +2,11 @@ import React, { useState } from 'react';
 
 interface Props {
     onLoginSuccess: (token: string) => void;
-    goToRegister: () => void;
-    goToAdminLogin: () => void;
+    goToUserLogin: () => void;
 }
 
-const UserLogin: React.FC<Props> = ({ onLoginSuccess, goToRegister, goToAdminLogin }) => {
-    const [email, setEmail] = useState('');
+const AdminLogin: React.FC<Props> = ({ onLoginSuccess, goToUserLogin }) => {
+    const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
 
@@ -15,10 +14,10 @@ const UserLogin: React.FC<Props> = ({ onLoginSuccess, goToRegister, goToAdminLog
         e.preventDefault();
         setError('');
         try {
-            const res = await fetch('http://localhost:4000/users/login', {
+            const res = await fetch('http://localhost:4000/admins/login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email, password }),
+                body: JSON.stringify({ username, password }),
             });
             const data = await res.json();
             if (res.ok) {
@@ -45,13 +44,13 @@ const UserLogin: React.FC<Props> = ({ onLoginSuccess, goToRegister, goToAdminLog
                 alignItems: 'center'
             }}
         >
-            <h2 style={{ marginBottom: 24, color: '#2563eb', fontWeight: 700 }}>Iniciar sesión</h2>
+            <h2 style={{ marginBottom: 24, color: '#2563eb', fontWeight: 700 }}>Acceso administrador</h2>
             <form onSubmit={handleLogin} style={{ width: '100%' }}>
                 <input
-                    type="email"
-                    placeholder="Correo electrónico"
-                    value={email}
-                    onChange={e => setEmail(e.target.value)}
+                    type="text"
+                    placeholder="Usuario"
+                    value={username}
+                    onChange={e => setUsername(e.target.value)}
                     required
                     style={{
                         width: '100%',
@@ -97,7 +96,7 @@ const UserLogin: React.FC<Props> = ({ onLoginSuccess, goToRegister, goToAdminLog
             </form>
             {error && <div style={{ color: 'red', marginBottom: 12, width: '100%', textAlign: 'center' }}>{error}</div>}
             <button
-                onClick={goToRegister}
+                onClick={goToUserLogin}
                 style={{
                     width: '100%',
                     background: '#f3f4f6',
@@ -111,24 +110,10 @@ const UserLogin: React.FC<Props> = ({ onLoginSuccess, goToRegister, goToAdminLog
                     cursor: 'pointer'
                 }}
             >
-                Crear cuenta de usuario
-            </button>
-            <button
-                onClick={goToAdminLogin}
-                style={{
-                    width: '100%',
-                    background: 'none',
-                    color: '#888',
-                    border: 'none',
-                    fontSize: 13,
-                    opacity: 0.7,
-                    cursor: 'pointer'
-                }}
-            >
-                Acceso administrador
+                Volver a login de usuario
             </button>
         </div>
     );
 };
 
-export default UserLogin;
+export default AdminLogin;

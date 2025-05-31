@@ -2,7 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { fetchCinemas } from '../services/api';
 import { Cinema } from '../types';
 
-const CinemaList: React.FC = () => {
+interface CinemaListProps {
+    onSelectCinema: (cinema: { id: number, name: string }) => void;
+}
+
+const CinemaList: React.FC<CinemaListProps> = ({ onSelectCinema }) => {
     const [cinemas, setCinemas] = useState<Cinema[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
@@ -36,7 +40,10 @@ const CinemaList: React.FC = () => {
                 <div key={cinema.id} className="cinema-card">
                     <div className="cinema-card-title">{cinema.name}</div>
                     <div className="cinema-card-location">{cinema.location}</div>
-                    <button className="cinema-card-btn">
+                    <button
+                        className="cinema-card-btn"
+                        onClick={() => onSelectCinema({ id: cinema.id, name: cinema.name })}
+                    >
                         Ver funciones
                         <span style={{ fontSize: 18, marginLeft: 4 }}>→</span>
                     </button>
