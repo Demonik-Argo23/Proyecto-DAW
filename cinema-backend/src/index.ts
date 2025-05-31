@@ -84,9 +84,13 @@ app.get('/cinemas/:cinemaId/auditoriums', async (req: Request, res: Response) =>
 // Crear una sala
 app.post('/cinemas/:cinemaId/auditoriums', authenticateToken, requireAdmin, async (req: Request, res: Response) => {
   const cinemaId = Number(req.params.cinemaId);
-  const { name } = req.body;
+  const { name, capacity } = req.body;
+  if (!name || !Number.isInteger(capacity) || capacity <= 0) {
+    res.status(400).json({ error: 'Name and positive integer capacity are required' });
+    return;
+  }
   try {
-    const auditorium = await addAuditorium(cinemaId, name);
+    const auditorium = await addAuditorium(cinemaId, name, capacity);
     res.status(201).json(auditorium);
   } catch (err) {
     res.status(500).json({ error: 'Error al crear sala' });
@@ -96,9 +100,13 @@ app.post('/cinemas/:cinemaId/auditoriums', authenticateToken, requireAdmin, asyn
 // Actualizar una sala
 app.patch('/auditoriums/:auditoriumId', authenticateToken, requireAdmin, async (req: Request, res: Response) => {
   const auditoriumId = Number(req.params.auditoriumId);
-  const { name } = req.body;
+  const { name, capacity } = req.body;
+  if (!name || !Number.isInteger(capacity) || capacity <= 0) {
+    res.status(400).json({ error: 'Name and positive integer capacity are required' });
+    return;
+  }
   try {
-    const auditorium = await updateAuditorium(auditoriumId, name);
+    const auditorium = await updateAuditorium(auditoriumId, name, capacity);
     res.json(auditorium);
   } catch (err) {
     res.status(500).json({ error: 'Error al actualizar sala' });

@@ -37,34 +37,34 @@ export async function addCinema(name: string, location: string) {
 
 // --- AUDITORIUMS ---
 
-// Obtener todas las salas (auditoriums) de un cine
-export async function getAuditoriums(cinemaId: number) {
-    const res = await pool.query(
-        'SELECT id, name FROM auditoriums WHERE cinema_id = $1',
-        [cinemaId]
-    );
-    return res.rows;
-}
-
 // Agregar una sala (auditorium)
-export async function addAuditorium(cinemaId: number, name: string) {
+export async function addAuditorium(cinemaId: number, name: string, capacity: number) {
     const res = await pool.query(
-        'INSERT INTO auditoriums (cinema_id, name) VALUES ($1, $2) RETURNING *',
-        [cinemaId, name]
+        'INSERT INTO auditoriums (cinema_id, name, capacity) VALUES ($1, $2, $3) RETURNING *',
+        [cinemaId, name, capacity]
     );
     return res.rows[0];
 }
 
 // Actualizar una sala (auditorium)
-export async function updateAuditorium(auditoriumId: number, name: string) {
+export async function updateAuditorium(auditoriumId: number, name: string, capacity: number) {
     const res = await pool.query(
-        'UPDATE auditoriums SET name = $1 WHERE id = $2 RETURNING *',
-        [name, auditoriumId]
+        'UPDATE auditoriums SET name = $1, capacity = $2 WHERE id = $3 RETURNING *',
+        [name, capacity, auditoriumId]
     );
     return res.rows[0];
 }
 
-//eliminar una sala (auditorium)
+// Obtener todas las salas (auditoriums) de un cine
+export async function getAuditoriums(cinemaId: number) {
+    const res = await pool.query(
+        'SELECT id, name, capacity FROM auditoriums WHERE cinema_id = $1',
+        [cinemaId]
+    );
+    return res.rows;
+}
+
+// Eliminar una sala (auditorium)
 export async function deleteAuditorium(auditoriumId: number) {
     const res = await pool.query(
         'DELETE FROM auditoriums WHERE id = $1 RETURNING *',
