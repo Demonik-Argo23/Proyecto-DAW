@@ -1,0 +1,53 @@
+body {
+    background: #f3f4f6;
+    font-family: Arial, sans-serif;
+    margin: 0;
+}
+
+.cinema-list-container {
+    max-width: 800px;
+    margin: 40px auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+}
+
+.cinema-card {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.cinema-card-title {
+    font-size: 1.3rem;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.cinema-card-location {
+    color: #555;
+    margin-bottom: 16px;
+}
+
+.cinema-card-btn {
+    align-self: flex-end;
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 18px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.cinema-card-btn:hover {
+    background: #1e40af;
+}
