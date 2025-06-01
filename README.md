@@ -89,6 +89,14 @@ password: cinerex
 - `PATCH /cinemas/:cinemaId/showtimes/:showtimeId` — Edit showtime
 - `DELETE /showtimes/:showtimeId` — Delete showtime
 
+## API Documentation (Swagger)
+
+Interactive API documentation is available as soon as you start the project.
+
+- Access the Swagger documentation at: [http://localhost:4000/api-docs](http://localhost:4000/api-docs)
+
+Here you can explore and test all API endpoints directly from your browser, view parameters, responses, and usage examples.
+
 ## Notes
 
 - All passwords are securely hashed using bcrypt.
