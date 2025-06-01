@@ -41,3 +41,8 @@ CREATE TABLE IF NOT EXISTS bookings (
     total_price NUMERIC(8,2) NOT NULL,
     booking_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+-- Crea un admin por defecto: admin1 / cinerex
+INSERT INTO admins (username, password_hash)
+VALUES ('admin1', '$2b$10$j6/wu9pg/U7p3Jff5Ot3Geg7gWrYAZUeTSTX866flBTu9cgWWvbVe')
+ON CONFLICT (username) DO NOTHING;

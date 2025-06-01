@@ -5,14 +5,14 @@ Cinema Admin App is a web platform for managing a cinema's operations. It allows
 
 ## Features
 - **Admin Dashboard**: Overview and quick access to cinema management features.
-- **Cinema Management**: View and manage cinema information (single location).
+- **Cinema Management**: View and manage cinema information.
 - **Auditorium Management**: Add, edit, and delete auditoriums (salas).
 - **Showtimes Management**: Add, edit, and delete showtimes for movies in auditoriums.
 - **User Authentication**: Register and log in as a user to purchase tickets.
 - **Admin Authentication**: Register and log in as an administrator.
 - **Ticket Booking**: Users can book tickets for available showtimes (backend ready).
 - **REST API**: Backend exposes endpoints for all management and booking operations.
-- **Dockerized**: Easily run the entire stack (PostgreSQL + backend) with Docker Compose.
+- **Dockerized**: Easily run the entire stack (PostgreSQL + backend + frontend) with Docker Compose.
 
 ## Project Structure
 ```
@@ -41,9 +41,8 @@ README.md
 
 ## Prerequisites
 - [Docker](https://www.docker.com/products/docker-desktop) installed
-- [Node.js](https://nodejs.org/) (for frontend development)
 
-## Installation
+## Quick Start
 
 1. **Clone the repository:**
    ```sh
@@ -51,38 +50,19 @@ README.md
    cd <repository-folder>
    ```
 
-2. **Install frontend dependencies:**
-   ```sh
-   cd cinema-admin-app
-   npm install
+2. **Create a `.env` file in the root directory** with the following variables (adjust as needed):
+   ```
+   DB_USER=postgres
+   DB_PASSWORD=postgres
    ```
 
-3. **Return to the project root:**
+3. **Run the full stack (frontend + backend + database) with Docker Compose:**
    ```sh
-   cd ..
+   docker-compose up --build
    ```
 
-## Usage
-
-### Run the full stack (backend + database) with Docker Compose
-
-```sh
-docker-compose up --build
-```
-
-- This will build and start the PostgreSQL database and backend API.
-- The backend will be available at [http://localhost:4000](http://localhost:4000).
-
-### Run the frontend (React app) in development mode
-
-In a new terminal:
-
-```sh
-cd cinema-admin-app
-npm start
-```
-
-- The frontend will be available at [http://localhost:3000](http://localhost:3000).
+   - The backend API will be available at [http://localhost:4000](http://localhost:4000)
+   - The frontend will be available at [http://localhost:3000](http://localhost:3000)
 
 ## Default Admin Account
 
@@ -112,7 +92,4 @@ password: cinerex
 ## Notes
 
 - All passwords are securely hashed using bcrypt.
-- The backend and database are fully containerized; data persists in Docker volumes.
-- You can extend the system to support ticket booking and more advanced features.
-
----
+- The backend, frontend, and database are fully containerized; data persists in Docker volumes.
