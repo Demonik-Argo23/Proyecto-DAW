@@ -8,7 +8,7 @@ export interface Showtime {
     movieTitle: string;
     cinemaId: string;
     auditoriumId?: string;
-    startTime: string; // ISO date string
+    startTime: string; 
     price?: number;
 }
 

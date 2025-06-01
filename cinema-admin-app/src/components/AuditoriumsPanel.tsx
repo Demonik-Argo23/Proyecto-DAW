@@ -47,7 +47,6 @@ const AuditoriumsPanel: React.FC<Props> = ({ cinema, onBack }) => {
 
     useEffect(() => {
         loadAuditoriums();
-        // eslint-disable-next-line
     }, [cinema.id]);
 
     const handleCreateAuditorium = async (e: React.FormEvent) => {

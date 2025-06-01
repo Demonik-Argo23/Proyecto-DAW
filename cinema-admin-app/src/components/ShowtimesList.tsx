@@ -21,7 +21,6 @@ const ShowtimesList: React.FC<Props> = ({ cinema, onBack }) => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
-    // Estado para compra de boletos
     const [buyingShowtime, setBuyingShowtime] = useState<Showtime | null>(null);
     const [seats, setSeats] = useState(1);
     const [buyError, setBuyError] = useState('');

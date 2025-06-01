@@ -23,7 +23,6 @@ const ShowtimesForm: React.FC = () => {
             movieTitle,
             cinemaId,
             startTime: showtime,
-            // agrega auditoriumId y price si tu backend los requiere
         };
 
         try {
