@@ -6,5 +6,6 @@ COPY package*.json ./
 RUN npm install
 
 COPY . .
+COPY yamljs.d.ts ./
 
 CMD ["npm", "run", "dev"]

@@ -4,6 +4,8 @@ import dotenv from 'dotenv';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import cors from 'cors';
+import swaggerUi from 'swagger-ui-express';
+import YAML from 'yamljs';
 import {
   addCinema,
   getDbTime,
@@ -34,6 +36,9 @@ const JWT_SECRET = process.env.JWT_SECRET || 'supersecret';
 const app = express();
 app.use(cors({ origin: 'http://localhost:3000' })); // <-- habilita CORS para el origen específico
 app.use(express.json());
+
+const swaggerDocument = YAML.load('./swagger.yaml');
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
