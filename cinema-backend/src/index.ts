@@ -121,8 +121,13 @@ app.delete('/auditoriums/:auditoriumId', authenticateToken, requireAdmin, async 
   try {
     const result = await deleteAuditorium(auditoriumId);
     res.status(204).send();
-  } catch (err) {
-    res.status(500).json({ error: 'Error al eliminar sala' });
+  } catch (err: any) {
+    if (err.code === '23503') {
+      // Foreign key violation
+      res.status(400).json({ error: 'No puedes eliminar la sala porque tiene funciones asociadas. Elimina primero las funciones.' });
+    } else {
+      res.status(500).json({ error: 'Error al eliminar sala' });
+    }
   }
 });
 

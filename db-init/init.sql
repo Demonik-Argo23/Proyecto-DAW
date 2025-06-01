@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS users (
 CREATE TABLE IF NOT EXISTS bookings (
     id SERIAL PRIMARY KEY,
     user_id INTEGER REFERENCES users(id),
-    showtime_id INTEGER REFERENCES showtimes(id),
+    showtime_id INTEGER REFERENCES showtimes(id) ON DELETE CASCADE,
     seats INTEGER NOT NULL,
     total_price NUMERIC(8,2) NOT NULL,
     booking_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP

@@ -6,7 +6,7 @@ import ShowtimesList from './components/ShowtimesList';
 import Header from './components/Header';
 import UserBookings from './components/UserBookings';
 import AdminLogin from './pages/AdminLogin';
-import AdminDashboard from './components/AdminDashboard';
+import AdminDashboard from './pages/AdminDashboard';
 
 const App: React.FC = () => {
     const [token, setToken] = useState<string | null>(() => localStorage.getItem('token'));

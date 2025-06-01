@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { fetchCinemas } from '../services/api';
+import AuditoriumsPanel from './AuditoriumsPanel';
 
 interface Cinema {
     id: number;
@@ -15,6 +16,7 @@ const CinemaAdminPanel: React.FC = () => {
     const [location, setLocation] = useState('');
     const [createError, setCreateError] = useState('');
     const [success, setSuccess] = useState('');
+    const [selectedCinema, setSelectedCinema] = useState<Cinema | null>(null);
 
     const loadCinemas = async () => {
         setLoading(true);
@@ -64,6 +66,15 @@ const CinemaAdminPanel: React.FC = () => {
             setCreateError('Error de red.');
         }
     };
+
+    if (selectedCinema) {
+        return (
+            <AuditoriumsPanel
+                cinema={selectedCinema}
+                onBack={() => setSelectedCinema(null)}
+            />
+        );
+    }
 
     return (
         <div style={{ marginBottom: 32 }}>
@@ -131,6 +142,22 @@ const CinemaAdminPanel: React.FC = () => {
                         }}>
                             <div style={{ fontWeight: 'bold', fontSize: 18 }}>{cinema.name}</div>
                             <div style={{ color: '#555', marginBottom: 8 }}>{cinema.location}</div>
+                            <button
+                                style={{
+                                    alignSelf: 'flex-end',
+                                    background: '#2563eb',
+                                    color: '#fff',
+                                    border: 'none',
+                                    borderRadius: 8,
+                                    padding: '6px 14px',
+                                    fontSize: 14,
+                                    cursor: 'pointer',
+                                    marginTop: 8
+                                }}
+                                onClick={() => setSelectedCinema(cinema)}
+                            >
+                                Salas
+                            </button>
                         </div>
                     ))}
                 </div>
