@@ -27,8 +27,6 @@ services:
       - "4000:4000"
     depends_on:
       - postgres
-    volumes:
-      - ./cinema-backend:/app
     working_dir: /app
 
   frontend:
@@ -39,12 +37,9 @@ services:
       - "3000:3000"
     depends_on:
       - backend
-    volumes:
-      - ./cinema-admin-app:/app
     working_dir: /app
     environment:
       - CHOKIDAR_USEPOLLING=true
-    command: npm start
 
 volumes:
   postgres_data:
